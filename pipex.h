@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/16 01:45:37 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:03:44 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_pipex
 	pid_t	child1;
 	pid_t	child2;
 	int		status;
+	char	*cmd1_path;
+	char	*cmd2_path;
 }	t_pipex;
 
 void	error(char *str);

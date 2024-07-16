@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:53:56 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/16 01:52:24 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:30:23 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void	child_one(t_pipex *info, char **environ)
 	close(info->fds[1]);
 	close(info->fd_in);
 	execve("/usr/bin/grep", cmd, environ);
+	error("execve");
+}
+
+void	exec_cmd2(t_pipex *info, char **environ)
+{
+	char *cmd2[3] = {"wc", "-l", NULL};
+	dup2(info->fds[0], 0);
+	close(info->fds[0]);
+	dup2(info->fd_out, 1);
+	close(info->fd_out);
+	execve("/usr/bin/wc", cmd2, environ);
+	error("execve");
 }
 
 int	main(int argc, char *argv[], char **environ)
@@ -43,10 +55,5 @@ int	main(int argc, char *argv[], char **environ)
 	else
 		close(info.fds[1]);
 	waitpid(info.child1, &info.status, 0);
-	char *cmd2[3] = {"wc", "-l", NULL};
-	dup2(info.fds[0], 0);
-	dup2(info.fd_out, 1);
-	close(info.fds[0]);
-	close(info.fd_out);
-	execve("/usr/bin/wc", cmd2, environ);
+	exec_cmd2(&info, environ);
 }

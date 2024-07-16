@@ -21,7 +21,8 @@ void child_one(t_pipex *info, char **environ)
     error("execve");
 }
 
-void child_two(t_pipex *info, char **environ) {
+void child_two(t_pipex *info, char **environ)
+{
     char *cmd[3] = {"wc", "-l", NULL};
     close(info->fds[1]);
     dup2(info->fds[0], STDIN_FILENO);

@@ -1,7 +1,44 @@
 #include "pipex.h"
 #include <string.h>
 
-char 	*get_envp_path(char **environ)
+char	*rest_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	size_t	temp;
+	size_t	n;
+
+	i = 0;
+	n = 0;
+	while (haystack[i] && n < len)
+	{
+		j = 0;
+		temp = i;
+		while (haystack[temp] == needle[j] && temp < len)
+		{
+			if (j >= len)
+				break ;
+			j++;
+			temp++;
+			if (needle[j] == '\0')
+				return ((char *)&haystack[i]);
+		}
+		i++;
+		n++;
+	}
+	return (NULL);
+}
+
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	if (needle[0] == '\0')
+		return ((char *)haystack);
+	if (len == 0)
+		return (NULL);
+	return (rest_strnstr(haystack, needle, len));
+}
+
+char	*get_envp_path(char **environ)
 {
 	int		i;
 	char	*res;
@@ -17,7 +54,7 @@ char 	*get_envp_path(char **environ)
 	return (NULL);
 }
 
-static char	*nobu_strcpy(char *ans, char const *s, int start, int len)
+char	*nobu_strcpy(char *ans, char const *s, int start, int len)
 {
 	int	i;
 
@@ -31,7 +68,7 @@ static char	*nobu_strcpy(char *ans, char const *s, int start, int len)
 	return (ans);
 }
 
-static void	all_free(char **ans, int i)
+void	all_free(char **ans, int i)
 {
 	while (i > 0)
 	{
@@ -41,7 +78,7 @@ static void	all_free(char **ans, int i)
 	free(ans);
 }
 
-static int	count_words(char const *s, char c)
+int	count_words(char const *s, char c)
 {
 	int	count;
 	int	flag;
@@ -66,7 +103,7 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	**rest_of_split(char const *s, char c, char **ans, int count)
+char	**rest_of_split(char const *s, char c, char **ans, int count)
 {
 	int	i;
 	int	start;
@@ -159,24 +196,49 @@ char	*join_path(char *env, char *cmd)
 	return (res);
 }
 
+char	*ft_strndup(char *cmd)
+{
+	size_t	len;
+	size_t	i;
+	char	*res;
+
+	len = 0;
+	while (cmd[len] != ' ' && cmd[len] != '\0')
+		len++;
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	i = 0;
+	while (i < len)
+	{
+		res[i] = cmd[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
 char	*get_path_cmd(char *cmd, char **environ)
 {
-	char	**splited_cmd;
+	// char	**splited_cmd;
+	char	*cmd_without_op;
 	char	*path_envp;
 	char	**splited_path_envp;
 	char	*path_cmd;
 	int		i;
 
-	splited_cmd = ft_split(cmd, ' ');
+	// splited_cmd = ft_split(cmd, ' ');
+	cmd_without_op = ft_strndup(cmd);
+	if (cmd_without_op == NULL)
+		exit(1); //
 	path_envp = get_envp_path(environ);
 	path_envp += 5;
 	splited_path_envp = ft_split(path_envp, ':');
 	if (splited_path_envp == NULL)
-		exit(1);
+		exit(1); //
 	i = 0;
 	while (splited_path_envp[i] != NULL)
 	{
-		path_cmd = join_path(splited_path_envp[i], splited_cmd[0]);
+		// path_cmd = join_path(splited_path_envp[i], splited_cmd[0]);
+		path_cmd = join_path(splited_path_envp[i], cmd_without_op);
 		if (!access(path_cmd, X_OK))
 			return (path_cmd);
 		free(path_cmd);
@@ -185,19 +247,19 @@ char	*get_path_cmd(char *cmd, char **environ)
 	return (NULL);
 }
 
-int	main(int argc, char *argv[], char **environ)
-{
-	char	*cmd_path;
+// int	main(int argc, char *argv[], char **environ)
+// {
+// 	char	*cmd_path;
 
-	cmd_path = get_path_cmd(argv[argc - 1], environ); // argv[2]
-	if (cmd_path == NULL)
-		printf("error\n");
-	else
-		printf("cmd_path = %s\n", cmd_path);
-	return (0);
-}
+// 	cmd_path = get_path_cmd(argv[argc - 1], environ); // argv[2]
+// 	if (cmd_path == NULL)
+// 		printf("error\n");
+// 	else
+// 		printf("cmd_path = %s\n", cmd_path);
+// 	return (0);
+// }
 
-__attribute__((destructor))
-static void destructor() {
-    system("leaks -q a.out");
-}
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }

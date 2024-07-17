@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/16 19:03:44 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:25:38 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,27 @@ typedef struct s_pipex
 	int		status;
 	char	*cmd1_path;
 	char	*cmd2_path;
+	char	**cmd1_splited;
+	char	**cmd2_splited;
 }	t_pipex;
 
+void	child_one(t_pipex *info, char *cmd1, char **environ);
+void	exec_cmd2(t_pipex *info, char *cmd2, char **environ);
+void	file_open(t_pipex *info, char *file1, char *file2);
+char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*get_envp_path(char **environ);
+char	*nobu_strcpy(char *ans, char const *s, int start, int len);
+void	all_free(char **ans, int i);
+int		count_words(char const *s, char c);
+char	**rest_of_split(char const *s, char c, char **ans, int count);
+char	**ft_split(char const *s, char c);
+size_t	ft_strlen(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*join_path(char *env, char *cmd);
+char	*get_path_cmd(char *cmd, char **environ);
 void	error(char *str);
 // void error(const char *msg);
+// include
 
 #endif

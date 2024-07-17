@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:53:56 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/17 16:26:51 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:38:10 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ void	file_open(t_pipex *info, char *file1, char *file2)
 		error("open");
 }
 
-// void	init_info(t_pipex *info, char *cmd1, char *cmd2)
-// {
-// 	info->cmd1_splited = ft_split(cmd1);
-// 	info->cmd2_splited = ft_split(cmd2);
-// }
+void	split_envp_path(t_pipex *info, char **environ)
+{
+	char	*path_envp;
+
+	path_envp = get_envp_path(environ);
+	if (path_envp == NULL)
+		error("no $PATH"); //
+	info->splited_path_envp = ft_split(path_envp, ':');
+}
 
 int	main(int argc, char *argv[], char **environ)
 {
@@ -61,8 +65,8 @@ int	main(int argc, char *argv[], char **environ)
 	if (argc != 5)
 		exit(1);
 	file_open(&info, argv[1], argv[4]);
-	// init_info(&info, argv[2], argv[3]);
-	info.cmd1_path = get_path_cmd(argv[2], environ);
+	split_envp_path(&info, environ);
+	info.cmd1_path = get_path_cmd(&info, argv[2], environ);
 	if (info.cmd1_path == NULL)
 		error("cmd1"); //
 	if (pipe(info.fds) < 0)
@@ -73,7 +77,7 @@ int	main(int argc, char *argv[], char **environ)
 	else
 		close(info.fds[1]);
 	waitpid(info.child1, &info.status, 0);
-	info.cmd2_path = get_path_cmd(argv[3], environ);
+	info.cmd2_path = get_path_cmd(&info, argv[3], environ);
 	if (info.cmd2_path == NULL)
 		error("cmd2"); //
 	exec_cmd2(&info, argv[3], environ);

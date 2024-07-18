@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/17 18:55:01 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:37:37 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_envp_path(char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		res = strnstr(environ[i], "PATH", 4);
+		res = ft_strnstr(environ[i], "PATH", 4);
 		if (res)
 			return (res + 5);
 		i++;
@@ -37,11 +37,11 @@ char	*join_path(char *env, char *cmd)
 
 	tmp = ft_strjoin(env, "/");
 	if (tmp == NULL)
-		return (NULL);
+		message_error("Error\n");
 	res = ft_strjoin(tmp, cmd);
-	if (res == NULL)
-		return (NULL);
 	free(tmp);
+	if (res == NULL)
+		message_error("Error\n");
 	return (res);
 }
 
@@ -73,7 +73,7 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 
 	cmd_without_op = ft_strndup(cmd);
 	if (cmd_without_op == NULL)
-		exit(1); //
+		message_error("Error\n");
 	i = 0;
 	while (info->splited_path_envp[i] != NULL)
 	{

@@ -6,15 +6,18 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:53:56 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/18 21:47:29 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:41:04 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child_one(t_pipex *info, char *cmd1, char **environ)
+void	child_one(t_pipex *info, char **argv, char **environ)
 {
-	info->cmd1_splited = ft_split(cmd1, ' ');
+	info->fd_in = open(argv[1], O_RDONLY);
+	if (info->fd_in < 0)
+		error(argv[1]);
+	info->cmd1_splited = ft_split(argv[2], ' ');
 	close(info->fds[0]);
 	dup2(info->fds[1], 1);
 	dup2(info->fd_in, 0);
@@ -24,9 +27,12 @@ void	child_one(t_pipex *info, char *cmd1, char **environ)
 	error("execve");
 }
 
-void	exec_cmd2(t_pipex *info, char *cmd2, char **environ)
+void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 {
-	info->cmd2_splited = ft_split(cmd2, ' ');
+	info->fd_out = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	if (info->fd_out < 0)
+		error(argv[4]);
+	info->cmd2_splited = ft_split(argv[3], ' ');
 	dup2(info->fds[0], 0);
 	close(info->fds[0]);
 	dup2(info->fd_out, 1);
@@ -61,7 +67,7 @@ int	main(int argc, char *argv[], char **environ)
 
 	if (argc != 5)
 		message_error("Invalid args\n"); // message incorrect?
-	file_open(&info, argv[1], argv[4]);
+	// file_open(&info, argv[1], argv[4]);
 	split_envp_path(&info, environ);
 	info.cmd1_path = get_path_cmd(&info, argv[2], environ);
 	if (info.cmd1_path == NULL)
@@ -72,14 +78,15 @@ int	main(int argc, char *argv[], char **environ)
 	if (info.child1 == -1)
 		error("fork");
 	else if (info.child1 == 0)
-		child_one(&info, argv[2], environ);
+		child_one(&info, argv, environ);
+		// child_one(&info, argv[2], environ);
 	else
 		close(info.fds[1]);
 	waitpid(info.child1, &info.status, 0);
 	info.cmd2_path = get_path_cmd(&info, argv[3], environ);
 	if (info.cmd2_path == NULL)
 		error(ft_strndup(argv[3]));
-	exec_cmd2(&info, argv[3], environ);
+	exec_cmd2(&info, argv, environ);
 }
 
 // __attribute__((destructor))
@@ -87,7 +94,10 @@ int	main(int argc, char *argv[], char **environ)
 //     system("leaks -q pipex");
 // }
 
+// infile, outfileどちらも権限がない場合、"permission denied"が2回表示される // ok
 // cmdに絶対パスを渡されたときの処理
-// infile, outfileどちらも権限がない場合、"permission denied"が2回表示される
 // infileに権限がなく、outfileが存在しない場合、outfileが作成され、"permission denied"が表示される
-// gab
+// dup error ' == -1 ' // oumimoun
+// コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied"
+// free
+// pipe()は1000文字程度が限度

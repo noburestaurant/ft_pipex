@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:53:56 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/23 13:41:04 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:41:38 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	info->fd_in = open(argv[1], O_RDONLY);
 	if (info->fd_in < 0)
 		error(argv[1]);
+	// {
+	// 	// ft_printf("bash: %s: Permissiondenied\n", argv[1]);
+	// 	ft_printf("%s\n", strerror(errno));
+	// 	exit(1);
+	// }
 	info->cmd1_splited = ft_split(argv[2], ' ');
+	if (info->cmd1_path == NULL)
+	{
+		ft_printf("bash: %s: command not found\n", info->cmd1_splited[0]);
+		exit(1);
+	}
 	close(info->fds[0]);
 	dup2(info->fds[1], 1);
 	dup2(info->fd_in, 0);
@@ -33,6 +43,11 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 	if (info->fd_out < 0)
 		error(argv[4]);
 	info->cmd2_splited = ft_split(argv[3], ' ');
+	if (info->cmd2_path == NULL)
+	{
+		ft_printf("bash: %s: command not found\n", info->cmd2_splited[0]);
+		exit(1);
+	}
 	dup2(info->fds[0], 0);
 	close(info->fds[0]);
 	dup2(info->fd_out, 1);
@@ -41,15 +56,15 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 	error("execve");
 }
 
-void	file_open(t_pipex *info, char *file1, char *file2)
-{
-	info->fd_in = open(file1, O_RDONLY);
-	if (info->fd_in < 0)
-		error(file1);
-	info->fd_out = open(file2, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-	if (info->fd_out < 0)
-		error(file2);
-}
+// void	file_open(t_pipex *info, char *file1, char *file2)
+// {
+// 	info->fd_in = open(file1, O_RDONLY);
+// 	if (info->fd_in < 0)
+// 		error(file1);
+// 	info->fd_out = open(file2, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+// 	if (info->fd_out < 0)
+// 		error(file2);
+// }
 
 void	split_envp_path(t_pipex *info, char **environ)
 {
@@ -70,8 +85,8 @@ int	main(int argc, char *argv[], char **environ)
 	// file_open(&info, argv[1], argv[4]);
 	split_envp_path(&info, environ);
 	info.cmd1_path = get_path_cmd(&info, argv[2], environ);
-	if (info.cmd1_path == NULL)
-		error(ft_strndup(argv[2])); // leaks??
+	// if (info.cmd1_path == NULL)
+	// 	error(ft_strndup(argv[2])); // leaks??
 	if (pipe(info.fds) < 0)
 		error("pipe");
 	info.child1 = fork();
@@ -84,8 +99,8 @@ int	main(int argc, char *argv[], char **environ)
 		close(info.fds[1]);
 	waitpid(info.child1, &info.status, 0);
 	info.cmd2_path = get_path_cmd(&info, argv[3], environ);
-	if (info.cmd2_path == NULL)
-		error(ft_strndup(argv[3]));
+	// if (info.cmd2_path == NULL)
+	// 	error(ft_strndup(argv[3]));
 	exec_cmd2(&info, argv, environ);
 }
 
@@ -101,3 +116,10 @@ int	main(int argc, char *argv[], char **environ)
 // コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied"
 // free
 // pipe()は1000文字程度が限度
+// bash
+// < infile ccat | grep char > outfile
+// bash: ccat: command not found
+// my_pipex
+// ./pipex "infile" "ccat" "grep char" "outfile"
+// ccat: No such file or directory
+// ft_printf("%s", strerror(errno));

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/23 13:17:35 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:40:44 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+// # include <string.h>
+// # include <errno.h>
 
 typedef struct s_pipex
 {
@@ -54,5 +56,6 @@ char	*ft_strndup(char *cmd);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);
 void	message_error(char *str);
+int		ft_printf(const char *fmt, ...);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/24 19:40:44 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:51:53 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-// # include <string.h>
-// # include <errno.h>
+# include <string.h>
+# include <errno.h>
 
 typedef struct s_pipex
 {

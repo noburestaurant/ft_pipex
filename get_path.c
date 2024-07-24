@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/18 13:37:37 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:31:35 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,20 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 	while (info->splited_path_envp[i] != NULL)
 	{
 		path_cmd = join_path(info->splited_path_envp[i], cmd_without_op);
-		if (!access(path_cmd, X_OK))
+		// if (!access(path_cmd, X_OK))
+		// {
+		// 	free(cmd_without_op);
+		// 	return (path_cmd);
+		// }
+		if (!access(path_cmd, F_OK))
 		{
-			free(cmd_without_op);
-			return (path_cmd);
+			if (!access(path_cmd, X_OK))
+			{
+				free(cmd_without_op);
+				return (path_cmd);
+			}
+			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));
+			// exit(1);
 		}
 		free(path_cmd);
 		i++;

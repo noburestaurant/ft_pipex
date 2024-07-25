@@ -14,7 +14,6 @@
 
 void	child_one(t_pipex *info, char **argv, char **environ)
 {
-	printf("child_one\n");
 	info->fd_in = open(argv[1], O_RDONLY);
 	if (info->fd_in < 0)
 	{
@@ -39,14 +38,13 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 
 void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 {
-	printf("exec_cmd2\n");
 	info->fd_out = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (info->fd_out < 0)
 	{
-		ft_printf("bash: %s: %s\n", argv[3], strerror(errno));
+		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
 		exit(1);
 	}
-	info->cmd1_path = get_path_cmd(info, argv[2], environ);
+	info->cmd2_path = get_path_cmd(info, argv[3], environ);
 	info->cmd2_splited = ft_split(argv[3], ' ');
 	if (info->cmd2_path == NULL)
 	{

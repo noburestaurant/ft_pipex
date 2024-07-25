@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:53:56 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/25 18:42:04 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:48:23 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		exit(1);
 	}
 	close(info->fds[0]);
-	if (dup2(info->fds[1], 1) < 0);
+	if (dup2(info->fds[1], 1) < 0)
 	{
 		close(info->fds[1]);
 		close(info->fd_in);
@@ -36,7 +36,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		exit(1);
 	}
 	close(info->fds[1]);
-	if (dup2(info->fd_in, 0) < 0);
+	if (dup2(info->fd_in, 0) < 0)
 	{
 		close(info->fd_in);
 		ft_printf("%s\n", strerror(errno));
@@ -44,7 +44,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	}
 	close(info->fd_in);
 	execve(info->cmd1_path, info->cmd1_splited, environ);
-	error("execve");
+	// error("execve");
 }
 
 void	exec_cmd2(t_pipex *info, char **argv, char **environ)
@@ -62,7 +62,7 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 		ft_printf("bash: %s: command not found\n", info->cmd2_splited[0]);
 		exit(1);
 	}
-	if (dup2(info->fds[0], 0) < 0);
+	if (dup2(info->fds[0], 0) < 0)
 	{
 		close(info->fds[0]);
 		close(info->fd_out);
@@ -70,7 +70,7 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 		exit(1);
 	}
 	close(info->fds[0]);
-	if (dup2(info->fd_out, 1) < 0);
+	if (dup2(info->fd_out, 1) < 0)
 	{
 		close(info->fd_out);
 		ft_printf("%s\n", strerror(errno));
@@ -78,7 +78,7 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 	}
 	close(info->fd_out);
 	execve(info->cmd2_path, info->cmd2_splited, environ);
-	error("execve");
+	// error("execve");
 }
 
 // void	file_open(t_pipex *info, char *file1, char *file2)
@@ -134,14 +134,14 @@ int	main(int argc, char *argv[], char **environ)
 //     system("leaks -q pipex");
 // }
 
-infile, outfileどちらも権限がない場合、"permission denied"が2回表示される // ok
-infileに権限がなく、outfileが存在しない場合、outfileが作成され、"permission denied"が表示される // ok
-dup error ' == -1 ' // oumimoun // ok
-cmdに実行権限がないときに"No such file or directory"ではなく"Permission denied"を表示する
-cmdに絶対パスを渡されたときの処理
-コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied"
-leaks free()
-pipe()は1000文字程度が限度
+// infile, outfileどちらも権限がない場合、"permission denied"が2回表示される // ok
+// infileに権限がなく、outfileが存在しない場合、outfileが作成され、"permission denied"が表示される // ok
+// dup error ' == -1 ' // oumimoun // ok
+// cmdに実行権限がないときに"No such file or directory"ではなく"Permission denied"を表示する // ok
+// コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied" // ok
+// cmdに絶対パスを渡されたときの処理
+// leaks free() (after ex_cm2)
+// pipe()は1000文字程度が限度
 
 // *bash 
 // < aainfile cat | grep char > outfile

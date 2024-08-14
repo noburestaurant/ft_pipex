@@ -1,0 +1,14 @@
+1 heredoc
+check argv
+	strncmp("heredoc", argv[1], ft_strlen(heredoc));
+create heredoc.tmp
+dup(stdin)
+write(heredoc >)
+get_next_lin(num which has been got dup func)
+check return value of gnl
+	NULL
+return value is exactly same as line then close the num
+
+2 maltiple pipes
+check argc
+if no heredoc then number of cmd equals argc - 2

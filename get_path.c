@@ -6,12 +6,11 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/25 20:47:06 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:53:10 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <string.h>
 
 char	*get_envp_path(char **environ)
 {
@@ -71,7 +70,7 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 	char	*path_cmd;
 	int		i;
 
-	cmd_without_op = ft_strndup(cmd); // if (check_absolute_path(cmd_without_op))
+	cmd_without_op = ft_strndup(cmd);
 	if (cmd_without_op == NULL)
 		message_error("Error\n");
 	i = 0;
@@ -80,9 +79,8 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 		path_cmd = join_path(info->splited_path_envp[i], cmd_without_op);
 		if (!access(path_cmd, F_OK))
 		{
-			if (!access(path_cmd, X_OK)) // check_excute_right();
+			if (!access(path_cmd, X_OK))
 			{
-				free(path_cmd);
 				free(cmd_without_op);
 				return (path_cmd);
 			}

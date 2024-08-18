@@ -1,14 +1,26 @@
+Mandatory
+if (check_absolute_path(cmd_without_op))
+
 1 heredoc
 check argv
-	strncmp("heredoc", argv[1], ft_strlen(heredoc));
+	strncmp("heredoc", argv[1], ft_strlen(heredoc)) && argc == 6
 create heredoc.tmp
 dup(stdin)
 write(heredoc >)
-get_next_lin(num which has been got dup func)
+get_next_lin(num which has been got in dup func)
 check return value of gnl
 	NULL
 return value is exactly same as line then close the num
+	ft_strncmp(line, limiter, ft_strlen(limiter)) && ?(ft_strlen(line) -1 == ft_strlen(limiter))?
 
 2 maltiple pipes
 check argc
 if no heredoc then number of cmd equals argc - 2
+
+dup2(data->save, 0);
+dup2(data->data->fds[1], 1);
+execve
+close(data->save);
+data->save = dup(data->fds[0]);
+close(data->fds[0]);
+close(data->fds[1]);

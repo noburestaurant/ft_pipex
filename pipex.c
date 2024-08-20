@@ -129,7 +129,7 @@ int	main(int argc, char *argv[], char **environ)
 // dup error ' == -1 ' // oumimoun // ok
 // cmdに実行権限がないときに"No such file or directory"ではなく"Permission denied"を表示する // ok
 // コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied" // ok
-// cmdに絶対パスを渡されたときの処理
+// cmdに絶対パスを渡されたときの処理 // ok
 // leaks free() (after ex_cm2)
 // pipe()は1000文字程度が限度
 

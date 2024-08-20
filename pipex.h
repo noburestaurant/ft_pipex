@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/24 19:51:53 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:55:55 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*join_path(char *env, char *cmd);
 char	*ft_strndup(char *cmd);
+char	*check_excutable_file(char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);
 void	message_error(char *str);

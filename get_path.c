@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/17 20:53:10 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:15:06 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,31 @@ char	*ft_strndup(char *cmd)
 	return (res);
 }
 
+char	*check_excutable_file(char *file)
+{
+	if (strchr(file, '.') || strchr(file, '/'))
+	{
+		if (!access(file, F_OK))
+		{
+			if (!access(file, X_OK))
+			{
+				return (file);
+			}
+			ft_printf("bash: %s: %s\n", file, strerror(errno));
+			exit(1);
+		}
+	}
+	return (NULL);
+}
+
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 {
 	char	*cmd_without_op;
 	char	*path_cmd;
 	int		i;
 
+	if (check_excutable_file(cmd))
+		return (cmd);
 	cmd_without_op = ft_strndup(cmd);
 	if (cmd_without_op == NULL)
 		message_error("Error\n");

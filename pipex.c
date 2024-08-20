@@ -114,10 +114,9 @@ int	main(int argc, char *argv[], char **environ)
 		error("fork");
 	else if (info.child2 == 0)
 		exec_cmd2(&info, argv, environ);
-	// exec_cmd2(&info, argv, environ);
-	// close(info.fds[0]);
-	// close(info.fds[1]);
 	waitpid(info.child2, &info.status, 0);
+	close(info.fds[0]);
+	close(info.fds[1]);
 }
 
 // __attribute__((destructor))

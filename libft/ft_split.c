@@ -1,55 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.c                                            :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 18:54:32 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/17 18:54:43 by hnakayam         ###   ########.fr       */
+/*   Created: 2024/04/19 05:26:33 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/04/30 16:23:23 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-char	*rest_strnstr(const char *haystack, const char *needle, size_t len)
-{
-	size_t	i;
-	size_t	j;
-	size_t	temp;
-	size_t	n;
-
-	i = 0;
-	n = 0;
-	while (haystack[i] && n < len)
-	{
-		j = 0;
-		temp = i;
-		while (haystack[temp] == needle[j] && temp < len)
-		{
-			if (j >= len)
-				break ;
-			j++;
-			temp++;
-			if (needle[j] == '\0')
-				return ((char *)&haystack[i]);
-		}
-		i++;
-		n++;
-	}
-	return (NULL);
-}
-
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
-{
-	if (needle[0] == '\0')
-		return ((char *)haystack);
-	if (len == 0)
-		return (NULL);
-	return (rest_strnstr(haystack, needle, len));
-}
-
-char	*nobu_strcpy(char *ans, char const *s, int start, int len)
+static char	*nobu_strcpy(char *ans, char const *s, int start, int len)
 {
 	int	i;
 
@@ -63,7 +26,7 @@ char	*nobu_strcpy(char *ans, char const *s, int start, int len)
 	return (ans);
 }
 
-void	all_free(char **ans, int i)
+static void	all_free(char **ans, int i)
 {
 	while (i > 0)
 	{
@@ -73,7 +36,7 @@ void	all_free(char **ans, int i)
 	free(ans);
 }
 
-int	count_words(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
 	int	count;
 	int	flag;
@@ -98,7 +61,7 @@ int	count_words(char const *s, char c)
 	return (count);
 }
 
-char	**rest_of_split(char const *s, char c, char **ans, int count)
+static char	**rest_of_split(char const *s, char c, char **ans, int count)
 {
 	int	i;
 	int	start;
@@ -139,39 +102,24 @@ char	**ft_split(char const *s, char c)
 	return (rest_of_split(s, c, ans, count));
 }
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
+// int	main(void)
+// {
+// 	char	**res;
+// 	int		i;
 
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
+// 	i = 0;
+// 	res = ft_split(" I my me mine ", ' ');
+// 	while (res[i] != NULL)
+// 	{
+// 		printf("%s\n", res[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		total_len;
-	char	*ans;
-	int		i;
+// #include <libc.h>
 
-	total_len = (int)ft_strlen(s1) + (int)ft_strlen(s2) + 1;
-	ans = (char *)malloc(sizeof(char) * total_len);
-	if (ans == NULL)
-		return (NULL);
-	i = 0;
-	while (*s1)
-	{
-		ans[i] = *s1;
-		s1++;
-		i++;
-	}
-	while (*s2)
-	{
-		ans[i] = *s2;
-		s2++;
-		i++;
-	}
-	ans[i] = '\0';
-	return (ans);
-}
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }

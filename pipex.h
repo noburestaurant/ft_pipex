@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/20 16:38:24 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 13:24:10 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <errno.h>
+# include "./ft_printf/ft_printf.h"
+# include "./libft/libft.h"
 
 typedef struct s_pipex
 {
@@ -44,19 +46,10 @@ void	split_envp_path(t_pipex *info, char **environ);
 char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*get_envp_path(char **environ);
-char	*nobu_strcpy(char *ans, char const *s, int start, int len);
-void	all_free(char **ans, int i);
-int		count_words(char const *s, char c);
-char	**rest_of_split(char const *s, char c, char **ans, int count);
-char	**ft_split(char const *s, char c);
-size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
 char	*join_path(char *env, char *cmd);
-char	*ft_strndup(char *cmd);
 char	*search_excutable_file(char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);
 void	message_error(char *str);
-int		ft_printf(const char *fmt, ...);
 
 #endif

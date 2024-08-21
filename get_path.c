@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/20 16:14:30y hnakayam         ###   ########.fr       */
+/*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/08/21 13:30:11 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,42 +26,6 @@ char	*get_envp_path(char **environ)
 		i++;
 	}
 	return (NULL);
-}
-
-
-char	*join_path(char *env, char *cmd)
-{
-	char	*tmp;
-	char	*res;
-
-	tmp = ft_strjoin(env, "/");
-	if (tmp == NULL)
-		message_error("Error\n");
-	res = ft_strjoin(tmp, cmd);
-	free(tmp);
-	if (res == NULL)
-		message_error("Error\n");
-	return (res);
-}
-
-char	*ft_strndup(char *cmd)
-{
-	size_t	len;
-	size_t	i;
-	char	*res;
-
-	len = 0;
-	while (cmd[len] != ' ' && cmd[len] != '\0')
-		len++;
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	i = 0;
-	while (i < len)
-	{
-		res[i] = cmd[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
 }
 
 char	*search_excutable_file(char *file)
@@ -99,7 +63,6 @@ char	*search_cmd(t_pipex *info, char *cmd_without_op)
 		{
 			if (!access(path_cmd, X_OK))
 			{
-				// free(cmd_without_op);
 				return (path_cmd);
 			}
 			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 13:24:10 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 13:35:32 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	*search_excutable_file(char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);
 void	message_error(char *str);
+char	*ft_strndup(char *cmd);
 
 #endif

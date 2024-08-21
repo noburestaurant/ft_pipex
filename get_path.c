@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 13:30:11 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:20:23 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,21 @@ char	*search_excutable_file(char *file)
 	return (NULL);
 }
 
+void	error_no_envp(t_pipex *info, char *cmd_without_op)
+{
+	ft_printf("bash: %s: No such file or diretory\n", cmd_without_op);
+	free(cmd_without_op);
+	exit(127);
+}
+
 char	*search_cmd(t_pipex *info, char *cmd_without_op)
 {
 	char	*path_cmd;
 	int		i;
 
 	i = 0;
+	if (info->splited_path_envp == NULL)
+		error_no_envp(info, cmd_without_op);
 	while (info->splited_path_envp[i] != NULL)
 	{
 		path_cmd = join_path(info->splited_path_envp[i], cmd_without_op);

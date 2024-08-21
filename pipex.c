@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 13:27:34 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 14:53:39 by hnakayam         ###   ########.fr       */
+/*   Created: 2024/08/21 19:02:14 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/08/21 19:25:23 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,13 @@ void	split_envp_path(t_pipex *info, char **environ)
 
 	path_envp = get_envp_path(environ);
 	if (path_envp == NULL)
-		error("no $PATH");
-	info->splited_path_envp = ft_split(path_envp, ':');
+	{
+		info->splited_path_envp = NULL;
+	}
+	else
+	{
+		info->splited_path_envp = ft_split(path_envp, ':');
+	}
 }
 
 int	main(int argc, char *argv[], char **environ)
@@ -110,8 +115,10 @@ int	main(int argc, char *argv[], char **environ)
 // cmdに絶対パスを渡されたときの処理 // ok
 // 絶対パスでコマンドを渡されたときのテスト
 // permission 0644 // ok
-// std err (ft_printf)
-// unset PATH
+// std err (ft_printf) // ok
+// unset PATH // ok
+// 終了ステータス
+// 
 // leaks free() (after ex_cm2)
 // pipe()は1000文字程度が限度
 

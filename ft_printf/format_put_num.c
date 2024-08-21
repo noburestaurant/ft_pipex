@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:50:13 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/06/12 12:55:06 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:31:48 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ ssize_t	printf_d_i(int num, int **crr_len)
 	if (num == INT_MIN)
 	{
 		**crr_len += 11;
-		return (write(1, "-2147483648", 11));
+		return (write(2, "-2147483648", 11));
 	}
 	if (num < 0)
 	{
 		num *= -1;
 		(**crr_len)++;
-		if (write(1, "-", 1) == -1)
+		if (write(2, "-", 1) == -1)
 			return (-1);
 	}
 	calc_digit(num, &digit, 10);

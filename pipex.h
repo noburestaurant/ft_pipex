@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 13:35:32 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:21:55 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*get_envp_path(char **environ);
 char	*join_path(char *env, char *cmd);
+void	error_no_envp(t_pipex *info, char *cmd_without_op);
 char	*search_excutable_file(char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);
 void	message_error(char *str);
 char	*ft_strndup(char *cmd);
+void	free_two_dimensional_arrays(char **strs);
+void	free_all(t_pipex *info);
 
 #endif

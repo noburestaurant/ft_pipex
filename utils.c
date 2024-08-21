@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:29:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 13:36:12 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:36:18 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,25 @@ char	*ft_strndup(char *cmd)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+void	free_two_dimensional_arrays(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+}
+
+void	free_all(t_pipex *info)
+{
+	if (info == NULL)
+		return ;
+	if (info->splited_path_envp != NULL)
+		free_two_dimensional_arrays(info->splited_path_envp);
 }

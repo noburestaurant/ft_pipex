@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:52:07 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/07/24 19:52:50 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:32:17 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	put_num(unsigned long long num, int digit, int base, char index)
 	if (num % base < 10)
 	{
 		c = num % base + '0';
-		if (write(1, &c, 1) == -1)
+		if (write(2, &c, 1) == -1)
 			return (-1);
 	}
 	else
@@ -49,7 +49,7 @@ int	put_num(unsigned long long num, int digit, int base, char index)
 			c = num % base - 10 + 'A';
 		else if (index == 'l')
 			c = num % base - 10 + 'a';
-		if (write(1, &c, 1) == -1)
+		if (write(2, &c, 1) == -1)
 			return (-1);
 	}
 	return (0);

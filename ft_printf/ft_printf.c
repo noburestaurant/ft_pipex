@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:52:15 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/06/12 14:52:17 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:32:30 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	nobu_putstr(char **crr, int *crr_len)
 	len = 0;
 	while (*(*crr + len) != '%' && *(*crr + len))
 		len++;
-	if (write(1, *crr, len) == -1)
+	if (write(2, *crr, len) == -1)
 		return (-1);
 	*crr_len += len;
 	*crr += len;
@@ -37,7 +37,7 @@ ssize_t	nobu_format(char **crr, int *crr_len, va_list *ap)
 		return (printf_s(va_arg(*ap, char *), &crr_len));
 	else if (**crr == 'p')
 	{
-		if (write(1, "0x", 2) == -1)
+		if (write(2, "0x", 2) == -1)
 			return (-1);
 		*crr_len += 2;
 		return (printf_p(va_arg(*ap, void *), &crr_len));

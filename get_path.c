@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:55:00 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/20 15:15:06 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:14:30y hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strndup(char *cmd)
 	return (res);
 }
 
-char	*check_excutable_file(char *file)
+char	*search_excutable_file(char *file)
 {
 	if (strchr(file, '.') || strchr(file, '/'))
 	{
@@ -77,21 +77,20 @@ char	*check_excutable_file(char *file)
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
 			exit(1);
 		}
+		else
+		{
+			ft_printf("bash: %s: %s\n", file, strerror(errno));
+			exit(1);
+		}
 	}
 	return (NULL);
 }
 
-char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
+char	*search_cmd(t_pipex *info, char *cmd_without_op)
 {
-	char	*cmd_without_op;
 	char	*path_cmd;
 	int		i;
 
-	if (check_excutable_file(cmd))
-		return (cmd);
-	cmd_without_op = ft_strndup(cmd);
-	if (cmd_without_op == NULL)
-		message_error("Error\n");
 	i = 0;
 	while (info->splited_path_envp[i] != NULL)
 	{
@@ -100,7 +99,7 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 		{
 			if (!access(path_cmd, X_OK))
 			{
-				free(cmd_without_op);
+				// free(cmd_without_op);
 				return (path_cmd);
 			}
 			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));
@@ -111,8 +110,28 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 		free(path_cmd);
 		i++;
 	}
-	free(cmd_without_op);
 	return (NULL);
+}
+
+char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
+{
+	char	*cmd_without_op;
+	char	*path_cmd;
+
+	if (search_excutable_file(cmd))
+		return (cmd);
+	cmd_without_op = ft_strndup(cmd);
+	if (cmd_without_op == NULL)
+		message_error("Error\n");
+	path_cmd = search_cmd(info, cmd_without_op);
+	if (path_cmd == NULL)
+	{
+		ft_printf("%s: command not found\n", cmd_without_op);
+		free(cmd_without_op);
+		exit(1);
+	}
+	free(cmd_without_op);
+	return (path_cmd);
 }
 
 // int	main(int argc, char *argv[], char **environ)

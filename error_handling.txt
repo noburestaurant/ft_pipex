@@ -174,11 +174,12 @@ mypipex-
 	(nothing printed)
 
 zsh-
-
+< infile ./cat | grep Hello > outfile
+bash: ./cat: No such file or directory
 
 mypipex-
-
-
+./pp "infile" "./cat" "grep Hello" "outfile"
+nothing printed
 
 zsh-
 

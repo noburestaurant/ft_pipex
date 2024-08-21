@@ -22,14 +22,14 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
 		exit(1);
 	}
-	info->cmd1_path = get_path_cmd(info, argv[2], environ);
 	info->cmd1_splited = ft_split(argv[2], ' ');
-	if (info->cmd1_path == NULL)
-	{
-		ft_printf("bash: %s: command not found\n", info->cmd1_splited[0]);
-		exit(1);
-	}
-	if (dup2(info->fds[1], 1) < 0)
+	info->cmd1_path = get_path_cmd(info, argv[2], environ);
+	// if (info->cmd1_path == NULL)
+	// {
+	// 	ft_printf("bash: %s: command not found\n", info->cmd1_splited[0]);
+	// 	exit(1);
+	// }
+	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
 	{
 		close(info->fds[1]);
 		close(info->fd_in);
@@ -37,12 +37,6 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		exit(1);
 	}
 	close(info->fds[1]);
-	if (dup2(info->fd_in, 0) < 0)
-	{
-		close(info->fd_in);
-		ft_printf("%s\n", strerror(errno));
-		exit(1);
-	}
 	close(info->fd_in);
 	execve(info->cmd1_path, info->cmd1_splited, environ);
 	error("execve");
@@ -58,11 +52,11 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 	}
 	info->cmd2_path = get_path_cmd(info, argv[3], environ);
 	info->cmd2_splited = ft_split(argv[3], ' ');
-	if (info->cmd2_path == NULL)
-	{
-		ft_printf("bash: %s: command not found\n", info->cmd2_splited[0]);
-		exit(1);
-	}
+	// if (info->cmd2_path == NULL)
+	// {
+	// 	ft_printf("bash: %s: command not found\n", info->cmd2_splited[0]);
+	// 	exit(1);
+	// }
 	if (dup2(info->fds[0], 0) < 0)
 	{
 		close(info->fds[0]);
@@ -130,6 +124,7 @@ int	main(int argc, char *argv[], char **environ)
 // cmdに実行権限がないときに"No such file or directory"ではなく"Permission denied"を表示する // ok
 // コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied" // ok
 // cmdに絶対パスを渡されたときの処理 // ok
+// unset PATH
 // leaks free() (after ex_cm2)
 // pipe()は1000文字程度が限度
 

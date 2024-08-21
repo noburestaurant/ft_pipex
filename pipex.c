@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakayam <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:27:34 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 13:27:36 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:51:37 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		exit(1);
 	}
 	info->cmd1_splited = ft_split(argv[2], ' ');
-	info->cmd1_path = get_path_cmd(info, argv[2], environ);
+	info->cmd1_path = get_path_cmd(info, info->cmd1_splited[0], environ);
 	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
 	{
 		close(info->fds[1]);
@@ -45,8 +45,8 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
 		exit(1);
 	}
-	info->cmd2_path = get_path_cmd(info, argv[3], environ);
 	info->cmd2_splited = ft_split(argv[3], ' ');
+	info->cmd2_path = get_path_cmd(info, info->cmd2_splited[0], environ);
 	if (dup2(info->fds[0], 0) < 0 || dup2(info->fd_out, 1) < 0)
 	{
 		close(info->fds[0]);
@@ -109,6 +109,8 @@ int	main(int argc, char *argv[], char **environ)
 // コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied" // ok
 // cmdに絶対パスを渡されたときの処理 // ok
 // 絶対パスでコマンドを渡されたときのテスト
+// permission 0644
+// std err (ft_printf)
 // unset PATH
 // leaks free() (after ex_cm2)
 // pipe()は1000文字程度が限度

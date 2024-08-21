@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:02:14 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 19:25:23 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:37:02 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,11 @@ int	main(int argc, char *argv[], char **environ)
 // 終了ステータス
 // 
 // leaks free() (after ex_cm2)
-// pipe()は1000文字程度が限度
+
+// bash
+// unset PATH
+// ls
+// ./ls でなくても実行ファイル'ls'が実行される
 
 // *bash 
 // < aainfile cat | grep char > outfile

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:27:34 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 14:51:37 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:53:39 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 
 void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 {
-	info->fd_out = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	info->fd_out = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (info->fd_out < 0)
 	{
 		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
@@ -109,7 +109,7 @@ int	main(int argc, char *argv[], char **environ)
 // コマンドに実行権限がないとき(F_OK == 0 && X_OK == -1)は"Permission denied" // ok
 // cmdに絶対パスを渡されたときの処理 // ok
 // 絶対パスでコマンドを渡されたときのテスト
-// permission 0644
+// permission 0644 // ok
 // std err (ft_printf)
 // unset PATH
 // leaks free() (after ex_cm2)

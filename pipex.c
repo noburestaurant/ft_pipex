@@ -97,6 +97,13 @@ void	split_envp_path(t_pipex *info, char **environ)
 	}
 }
 
+void	return_status(t_pipex *info)
+{
+	free_all(info);
+	if (WIFEXITED(info->status))
+		exit(WEXITSTATUS(info->status));
+}
+
 int	main(int argc, char *argv[], char **environ)
 {
 	t_pipex	info;
@@ -122,8 +129,7 @@ int	main(int argc, char *argv[], char **environ)
 	waitpid(info.child2, &info.status, 0);
 	close(info.fds[0]);
 	close(info.fds[1]);
-	if (WIFEXITED(info.status))
-		exit(WEXITSTATUS(info.status));
+	return_status(&info);
 }
 
 // __attribute__((destructor))

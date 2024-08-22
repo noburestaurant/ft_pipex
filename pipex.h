@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/22 11:39:31 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:54:19 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void	message_error(char *str);
 char	*ft_strndup(char *cmd);
 void	free_two_dimensional_arrays(char **strs);
 void	free_all(t_pipex *info);
+void	return_status(t_pipex *info);
 
 #endif

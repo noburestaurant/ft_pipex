@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 19:02:14 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 20:21:45hnakayam         ###   ########.fr       */
+/*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/08/22 20:16:52 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	}
 	check_cmd_is_empty_or_space(argv[2]);
 	info->cmd1_splited = ft_split(argv[2], ' ');
+	if (info->cmd1_splited == NULL)
+		message_error("Error\n");
 	info->cmd1_path = get_path_cmd(info, info->cmd1_splited[0], environ);
 	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
 	{
@@ -68,6 +70,8 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 	}
 	check_cmd_is_empty_or_space(argv[3]);
 	info->cmd2_splited = ft_split(argv[3], ' ');
+	if (info->cmd1_splited == NULL)
+		message_error("Error\n");
 	info->cmd2_path = get_path_cmd(info, info->cmd2_splited[0], environ);
 	if (dup2(info->fds[0], 0) < 0 || dup2(info->fd_out, 1) < 0)
 	{

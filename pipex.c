@@ -113,12 +113,12 @@ int	main(int argc, char *argv[], char **environ)
 		child_one(&info, argv, environ);
 	else
 		close(info.fds[1]);
-	waitpid(info.child1, &info.status, 0);
 	info.child2 = fork();
 	if (info.child1 == -1)
 		error("fork");
 	else if (info.child2 == 0)
 		exec_cmd2(&info, argv, environ);
+	waitpid(info.child1, &info.status, 0);
 	waitpid(info.child2, &info.status, 0);
 	close(info.fds[0]);
 	close(info.fds[1]);

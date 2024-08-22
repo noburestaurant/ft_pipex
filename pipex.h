@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 19:21:55 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:39:31 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ typedef struct s_pipex
 
 void	child_one(t_pipex *info, char **argv, char **environ);
 void	exec_cmd2(t_pipex *info, char **argv, char **environ);
-void	file_open(t_pipex *info, char *file1, char *file2);
 void	split_envp_path(t_pipex *info, char **environ);
 char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*get_envp_path(char **environ);
 char	*join_path(char *env, char *cmd);
 void	error_no_envp(t_pipex *info, char *cmd_without_op);
+void	check_cmd_is_empty_or_space(char *cmd);
 char	*search_excutable_file(char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(char *str);

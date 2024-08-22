@@ -12,6 +12,26 @@
 
 #include "pipex.h"
 
+void	check_cmd_is_empty_or_space(char *cmd)
+{
+	int	i;
+
+	if (cmd[0] == '\0')
+	{
+		ft_printf("Command '' not found\n");
+		exit(127);
+	}
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] != ' ')
+			return ;
+		i++;
+	}
+	ft_printf("%s: command not found\n", cmd);
+	exit(127);
+}
+
 void	child_one(t_pipex *info, char **argv, char **environ)
 {
 	close(info->fds[0]);
@@ -22,6 +42,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
 		exit(1);
 	}
+	check_cmd_is_empty_or_space(argv[2]);
 	info->cmd1_splited = ft_split(argv[2], ' ');
 	info->cmd1_path = get_path_cmd(info, info->cmd1_splited[0], environ);
 	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
@@ -45,6 +66,7 @@ void	exec_cmd2(t_pipex *info, char **argv, char **environ)
 		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
 		exit(1);
 	}
+	check_cmd_is_empty_or_space(argv[3]);
 	info->cmd2_splited = ft_split(argv[3], ' ');
 	info->cmd2_path = get_path_cmd(info, info->cmd2_splited[0], environ);
 	if (dup2(info->fds[0], 0) < 0 || dup2(info->fd_out, 1) < 0)
@@ -122,6 +144,7 @@ int	main(int argc, char *argv[], char **environ)
 // 終了ステータス
 	// bashで確かめながら
 // "" or " " as command
+// splitなどでNULLが返ってきたときの処理
 // 
 // leaks free() (after ex_cm2)
 

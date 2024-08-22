@@ -97,13 +97,6 @@ void	split_envp_path(t_pipex *info, char **environ)
 	}
 }
 
-void	return_status(t_pipex *info)
-{
-	free_all(info);
-	if (WIFEXITED(info->status))
-		exit(WEXITSTATUS(info->status));
-}
-
 int	main(int argc, char *argv[], char **environ)
 {
 	t_pipex	info;

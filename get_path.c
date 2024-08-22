@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 20:27:52 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:41:02 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ char	*search_excutable_file(char *file)
 				return (file);
 			}
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
-			exit(1);
+			exit(126);
 		}
 		else
 		{
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
-			exit(1);
+			exit(127);
 		}
 	}
 	return (NULL);
@@ -77,7 +77,7 @@ char	*search_cmd(t_pipex *info, char *cmd_without_op)
 			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));
 			free(cmd_without_op);
 			free(path_cmd);
-			exit(1);
+			exit(126);
 		}
 		free(path_cmd);
 		i++;

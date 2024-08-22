@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:29:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 16:36:18 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:47:24 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	*join_path(char *env, char *cmd)
 
 	tmp = ft_strjoin(env, "/");
 	if (tmp == NULL)
-		message_error("Error\n");
+		message_error("Unexpected Error\n");
 	res = ft_strjoin(tmp, cmd);
 	free(tmp);
 	if (res == NULL)
-		message_error("Error\n");
+		message_error("Unexpected Error\n");
 	return (res);
 }
 

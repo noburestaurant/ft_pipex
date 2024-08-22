@@ -100,7 +100,7 @@ int	main(int argc, char *argv[], char **environ)
 	waitpid(info.child2, &info.status, 0);
 	close(info.fds[0]);
 	close(info.fds[1]);
-	if (WIFEXITED(&info.status))
+	if (WIFEXITED(info.status))
 		exit(WEXITSTATUS(info.status));
 }
 
@@ -121,6 +121,7 @@ int	main(int argc, char *argv[], char **environ)
 // unset PATH // ok
 // 終了ステータス
 	// bashで確かめながら
+// "" or " " as command
 // 
 // leaks free() (after ex_cm2)
 

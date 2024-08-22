@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:02:14 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 19:37:02 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:21:45hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	main(int argc, char *argv[], char **environ)
 	waitpid(info.child2, &info.status, 0);
 	close(info.fds[0]);
 	close(info.fds[1]);
+	if (WIFEXITED(&info.status))
+		exit(WEXITSTATUS(info.status));
 }
 
 // __attribute__((destructor))
@@ -118,6 +120,7 @@ int	main(int argc, char *argv[], char **environ)
 // std err (ft_printf) // ok
 // unset PATH // ok
 // 終了ステータス
+	// bashで確かめながら
 // 
 // leaks free() (after ex_cm2)
 

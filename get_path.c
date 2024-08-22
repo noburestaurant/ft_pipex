@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/21 19:20:23 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:27:52 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 	{
 		ft_printf("%s: command not found\n", cmd_without_op);
 		free(cmd_without_op);
-		exit(1);
+		exit(127);
 	}
 	free(cmd_without_op);
 	return (path_cmd);

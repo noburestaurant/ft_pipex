@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/25 18:06:46 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:19:39 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int	main(int argc, char *argv[], char **environ)
 
 // change function name (exec_cmd2 -> child_two exc.)
 // strchr -> ft_strchr
+//	nm -u ./pipex
 // mistake of spelling
 // 	diretory -> directory (no_envp func)
 // leaks

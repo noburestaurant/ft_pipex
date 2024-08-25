@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/22 20:16:52 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:06:46 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,37 +148,17 @@ int	main(int argc, char *argv[], char **environ)
 	// bashで確かめながら
 // "" or " " as command
 // splitなどでNULLが返ってきたときの処理
-// 
 // leaks free() (after ex_cm2)
-
 // bash
 // unset PATH
 // ls
 // ./ls でなくても実行ファイル'ls'が実行される
 
-// *bash 
-// < aainfile cat | grep char > outfile
-// bash: aainfile: Permission denied
-// *my_pipex // ok
-// ./pipex "aainfile" "cat" "grep char" "outfile"
-// bash: aainfile: Permission denied
-// *bash
-// < empty cat | grep char > outfile
-// bash: empty: No such file or directory
-// *my_pipex // ok
-// ./pipex "empty" "cat" "grep char" "outfile"
-// bash: empty: No such file or directory
-// *bash
-// < empty ccat | ggrep char > outfile
-// bash: empty: No such file or directory
-// bash: ggrep: command not found
-// *my_pipex // ok
-// ./pipex "empty" "ccat" "ggrep char" "outfile"
-// bash: empty: No such file or directory
-// bash: ggrep: command not found
-// *bash
-// < infile testecho | grep char > outfile
-// bash: /Users/hnakayam/mybin/testecho: Permission denied
-// *my_pipex
-// ./pipex "testecho" "cat" "grep char" "outfile"
-// bash: testecho: No such file or directory
+// change function name (exec_cmd2 -> child_two exc.)
+// strchr -> ft_strchr
+// mistake of spelling
+// 	diretory -> directory (no_envp func)
+// leaks
+// 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./your_program_file [args]
+
+// confirm the operation when cmd is "sleep"

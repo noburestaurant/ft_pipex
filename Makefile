@@ -2,8 +2,8 @@ NAME = pipex
 CC = cc
 GFLAGS = -Wall -Wextra -Werror
 SRCS = pipex.c get_path.c finish_program.c utils.c \
-		ft_printf/format_put_num.c ft_printf/format_put_letter.c \
-		 ft_printf/ft_printf_utils.c ft_printf/ft_printf.c \
+		ft_printf_stderr/format_put_num.c ft_printf_stderr/format_put_letter.c \
+		 ft_printf_stderr/ft_printf_utils.c ft_printf_stderr/ft_printf.c \
 		./libft/ft_strnstr.c ./libft/ft_split.c ./libft/ft_strlen.c ./libft/ft_strjoin.c
 OBJS = $(SRCS:.c=.o)
 

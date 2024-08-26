@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/25 18:19:39 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:11:57by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	error("execve");
 }
 
-void	exec_cmd2(t_pipex *info, char **argv, char **environ)
+void	child_two(t_pipex *info, char **argv, char **environ)
 {
 	info->fd_out = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (info->fd_out < 0)
@@ -121,7 +121,7 @@ int	main(int argc, char *argv[], char **environ)
 	if (info.child1 == -1)
 		error("fork");
 	else if (info.child2 == 0)
-		exec_cmd2(&info, argv, environ);
+		child_two(&info, argv, environ);
 	waitpid(info.child1, &info.status, 0);
 	waitpid(info.child2, &info.status, 0);
 	close(info.fds[0]);

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/22 11:54:19 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:14:03 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <errno.h>
-# include "./ft_printf/ft_printf.h"
+# include "./ft_printf_stderr/ft_printf.h"
 # include "./libft/libft.h"
 
 typedef struct s_pipex
@@ -40,7 +40,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	child_one(t_pipex *info, char **argv, char **environ);
-void	exec_cmd2(t_pipex *info, char **argv, char **environ);
+void	child_two(t_pipex *info, char **argv, char **environ);
 void	split_envp_path(t_pipex *info, char **environ);
 char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 14:14:03 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:12:46by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	split_envp_path(t_pipex *info, char **environ);
 char	*rest_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*get_envp_path(char **environ);
-char	*join_path(char *env, char *cmd);
+char	*join_path(t_pipex *info, char *env, char *cmd);
 void	error_no_envp(t_pipex *info, char *cmd_without_op);
-void	check_cmd_is_empty_or_space(char *cmd);
-char	*search_excutable_file(char *file);
+void	check_cmd_is_empty_or_space(t_pipex *info, char *cmd);
+char	*search_excutable_file(t_pipex *info, char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
-void	error(char *str);
-void	message_error(char *str);
+void	error(t_pipex *info, char *str);
+void	message_error(t_pipex *info, char *str);
 char	*ft_strndup(char *cmd);
-void	free_two_dimensional_arrays(char **strs);
+void	free_splited_arrays(char **strs);
 void	free_all(t_pipex *info);
 void	return_status(t_pipex *info);
 

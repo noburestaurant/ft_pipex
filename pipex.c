@@ -12,13 +12,14 @@
 
 #include "pipex.h"
 
-void	check_cmd_is_empty_or_space(char *cmd)
+void	check_cmd_is_empty_or_space(t_pipex *info, char *cmd)
 {
 	int	i;
 
 	if (cmd[0] == '\0')
 	{
 		ft_printf("Command '' not found\n");
+		free_all(info);
 		exit(127);
 	}
 	i = 0;
@@ -29,6 +30,7 @@ void	check_cmd_is_empty_or_space(char *cmd)
 		i++;
 	}
 	ft_printf("%s: command not found\n", cmd);
+	free_all(info);
 	exit(127);
 }
 
@@ -40,24 +42,26 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	{
 		close(info->fds[1]);
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
+		free_all(info);
 		exit(1);
 	}
-	check_cmd_is_empty_or_space(argv[2]);
+	check_cmd_is_empty_or_space(info, argv[2]);
 	info->cmd1_splited = ft_split(argv[2], ' ');
 	if (info->cmd1_splited == NULL)
-		message_error("Error\n");
+		message_error(info, "Error\n");
 	info->cmd1_path = get_path_cmd(info, info->cmd1_splited[0], environ);
 	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
 	{
 		close(info->fds[1]);
 		close(info->fd_in);
 		ft_printf("%s\n", strerror(errno));
+		free_all(info);
 		exit(1);
 	}
 	close(info->fds[1]);
 	close(info->fd_in);
 	execve(info->cmd1_path, info->cmd1_splited, environ);
-	error("execve");
+	error(info, "execve");
 }
 
 void	child_two(t_pipex *info, char **argv, char **environ)
@@ -66,24 +70,26 @@ void	child_two(t_pipex *info, char **argv, char **environ)
 	if (info->fd_out < 0)
 	{
 		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
+		free_all(info);
 		exit(1);
 	}
-	check_cmd_is_empty_or_space(argv[3]);
+	check_cmd_is_empty_or_space(info, argv[3]);
 	info->cmd2_splited = ft_split(argv[3], ' ');
-	if (info->cmd1_splited == NULL)
-		message_error("Error\n");
+	if (info->cmd2_splited == NULL)
+		message_error(info, "Error\n");
 	info->cmd2_path = get_path_cmd(info, info->cmd2_splited[0], environ);
 	if (dup2(info->fds[0], 0) < 0 || dup2(info->fd_out, 1) < 0)
 	{
 		close(info->fds[0]);
 		close(info->fd_out);
 		ft_printf("%s\n", strerror(errno));
+		free_all(info);
 		exit(1);
 	}
 	close(info->fds[0]);
 	close(info->fd_out);
 	execve(info->cmd2_path, info->cmd2_splited, environ);
-	error("execve");
+	error(info, "execve");
 }
 
 void	split_envp_path(t_pipex *info, char **environ)
@@ -106,20 +112,21 @@ int	main(int argc, char *argv[], char **environ)
 	t_pipex	info;
 
 	if (argc != 5)
-		message_error("Invalid args\n");
+		message_error(&info, "Invalid args\n");
+	init_info(&info);
 	split_envp_path(&info, environ);
 	if (pipe(info.fds) < 0)
-		error("pipe");
+		error(&info, "pipe");
 	info.child1 = fork();
 	if (info.child1 == -1)
-		error("fork");
+		error(&info, "fork");
 	else if (info.child1 == 0)
 		child_one(&info, argv, environ);
 	else
 		close(info.fds[1]);
 	info.child2 = fork();
 	if (info.child1 == -1)
-		error("fork");
+		error(&info, "fork");
 	else if (info.child2 == 0)
 		child_two(&info, argv, environ);
 	waitpid(info.child1, &info.status, 0);
@@ -160,6 +167,7 @@ int	main(int argc, char *argv[], char **environ)
 // mistake of spelling // ok
 // 	diretory -> directory (no_envp func) // ok
 // leaks
-// 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./your_program_file [args]
+// valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./your_program_file [args]
+// makefile "CC = cc -g" -> "CC = cc"
 
 // confirm the operation when cmd is "sleep"

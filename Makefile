@@ -1,5 +1,5 @@
 NAME = pipex
-CC = cc
+CC = cc -g
 GFLAGS = -Wall -Wextra -Werror
 SRCS = pipex.c get_path.c finish_program.c utils.c \
 		ft_printf_stderr/format_put_num.c ft_printf_stderr/format_put_letter.c \

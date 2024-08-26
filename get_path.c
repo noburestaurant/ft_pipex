@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 14:19:39 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:42:51 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_envp_path(char **environ)
 	return (NULL);
 }
 
-char	*search_excutable_file(char *file)
+char	*search_excutable_file(t_pipex *info, char *file)
 {
 	if (ft_strchr(file, '.') || ft_strchr(file, '/'))
 	{
@@ -39,11 +39,13 @@ char	*search_excutable_file(char *file)
 				return (file);
 			}
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
+			free_all(info);
 			exit(126);
 		}
 		else
 		{
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
+			free_all(info);
 			exit(127);
 		}
 	}
@@ -67,7 +69,7 @@ char	*search_cmd(t_pipex *info, char *cmd_without_op)
 		error_no_envp(info, cmd_without_op);
 	while (info->splited_path_envp[i] != NULL)
 	{
-		path_cmd = join_path(info->splited_path_envp[i], cmd_without_op);
+		path_cmd = join_path(info, info->splited_path_envp[i], cmd_without_op);
 		if (!access(path_cmd, F_OK))
 		{
 			if (!access(path_cmd, X_OK))
@@ -77,6 +79,7 @@ char	*search_cmd(t_pipex *info, char *cmd_without_op)
 			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));
 			free(cmd_without_op);
 			free(path_cmd);
+			free_all(info);
 			exit(126);
 		}
 		free(path_cmd);
@@ -90,11 +93,11 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 	char	*cmd_without_op;
 	char	*path_cmd;
 
-	if (search_excutable_file(cmd))
+	if (search_excutable_file(info, cmd))
 		return (cmd);
 	cmd_without_op = ft_strndup(cmd);
 	if (cmd_without_op == NULL)
-		message_error("Error\n");
+		message_error(info, "Error\n");
 	path_cmd = search_cmd(info, cmd_without_op);
 	if (path_cmd == NULL)
 	{

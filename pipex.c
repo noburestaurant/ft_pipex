@@ -154,11 +154,11 @@ int	main(int argc, char *argv[], char **environ)
 // ls
 // ./ls でなくても実行ファイル'ls'が実行される
 
-// change function name (exec_cmd2 -> child_two exc.)
-// strchr -> ft_strchr
-//	nm -u ./pipex
-// mistake of spelling
-// 	diretory -> directory (no_envp func)
+// change function name (exec_cmd2 -> child_two exc.) // ok
+// strchr -> ft_strchr // ok
+//	nm -u ./pipex // ok
+// mistake of spelling // ok
+// 	diretory -> directory (no_envp func) // ok
 // leaks
 // 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./your_program_file [args]
 

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/22 20:03:57 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:19:39 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_envp_path(char **environ)
 
 char	*search_excutable_file(char *file)
 {
-	if (strchr(file, '.') || strchr(file, '/'))
+	if (ft_strchr(file, '.') || ft_strchr(file, '/'))
 	{
 		if (!access(file, F_OK))
 		{
@@ -52,7 +52,7 @@ char	*search_excutable_file(char *file)
 
 void	error_no_envp(t_pipex *info, char *cmd_without_op)
 {
-	ft_printf("bash: %s: No such file or diretory\n", cmd_without_op);
+	ft_printf("bash: %s: No such file or directory\n", cmd_without_op);
 	free(cmd_without_op);
 	exit(127);
 }

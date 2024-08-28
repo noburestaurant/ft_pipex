@@ -56,7 +56,6 @@ void	free_splited_arrays(char **strs)
 	i = 0;
 	while (strs[i] != NULL)
 	{
-		ft_printf("%d\n", i); //
 		free(strs[i]);
 		i++;
 	}

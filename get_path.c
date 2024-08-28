@@ -103,6 +103,7 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 	{
 		ft_printf("%s: command not found\n", cmd_without_op);
 		free(cmd_without_op);
+		free_all(info);
 		exit(127);
 	}
 	free(cmd_without_op);

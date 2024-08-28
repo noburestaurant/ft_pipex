@@ -55,6 +55,7 @@ void	message_error(t_pipex *info, char *str);
 char	*ft_strndup(char *cmd);
 void	free_splited_arrays(char **strs);
 void	free_all(t_pipex *info);
+void	init_info(t_pipex *info);
 void	return_status(t_pipex *info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 14:11:57by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:20:27 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	main(int argc, char *argv[], char **environ)
 	t_pipex	info;
 
 	if (argc != 5)
-		message_error(&info, "Invalid args\n");
+		message_error(NULL, "Invalid args\n");
 	init_info(&info);
 	split_envp_path(&info, environ);
 	if (pipe(info.fds) < 0)

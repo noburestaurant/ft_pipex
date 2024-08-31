@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnakayam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 15:50:21 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 15:12:46by hnakayam         ###   ########.fr       */
+/*   Created: 2024/08/31 15:33:27 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/08/31 15:33:28 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	error(t_pipex *info, char *str);
 void	message_error(t_pipex *info, char *str);
 char	*ft_strndup(char *cmd);
 void	free_splited_arrays(char **strs);
-void	free_all(t_pipex *info);
+void	free_all_exit(t_pipex *info, int return_status);
 void	init_info(t_pipex *info);
 void	return_status(t_pipex *info);
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/22 19:54:54 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/30 10:20:27 by hnakayam         ###   ########.fr       */
+/*   Created: 2024/08/31 15:32:57 by hnakayam          #+#    #+#             */
+/*   Updated: 2024/08/31 15:33:57 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	check_cmd_is_empty_or_space(t_pipex *info, char *cmd)
 	if (cmd[0] == '\0')
 	{
 		ft_printf("Command '' not found\n");
-		free_all(info);
-		exit(127);
+		free_all_exit(info, 127);
 	}
 	i = 0;
 	while (cmd[i] != '\0')
@@ -30,8 +29,7 @@ void	check_cmd_is_empty_or_space(t_pipex *info, char *cmd)
 		i++;
 	}
 	ft_printf("%s: command not found\n", cmd);
-	free_all(info);
-	exit(127);
+	free_all_exit(info, 127);
 }
 
 void	child_one(t_pipex *info, char **argv, char **environ)
@@ -42,21 +40,19 @@ void	child_one(t_pipex *info, char **argv, char **environ)
 	{
 		close(info->fds[1]);
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
-		free_all(info);
-		exit(1);
+		free_all_exit(info, 1);
 	}
 	check_cmd_is_empty_or_space(info, argv[2]);
 	info->cmd1_splited = ft_split(argv[2], ' ');
 	if (info->cmd1_splited == NULL)
-		message_error(info, "Error\n");
+		message_error(info, "Unxpected Error\n");
 	info->cmd1_path = get_path_cmd(info, info->cmd1_splited[0], environ);
 	if (dup2(info->fds[1], 1) < 0 || dup2(info->fd_in, 0) < 0)
 	{
 		close(info->fds[1]);
 		close(info->fd_in);
 		ft_printf("%s\n", strerror(errno));
-		free_all(info);
-		exit(1);
+		free_all_exit(info, 1);
 	}
 	close(info->fds[1]);
 	close(info->fd_in);
@@ -70,21 +66,19 @@ void	child_two(t_pipex *info, char **argv, char **environ)
 	if (info->fd_out < 0)
 	{
 		ft_printf("bash: %s: %s\n", argv[4], strerror(errno));
-		free_all(info);
-		exit(1);
+		free_all_exit(info, 1);
 	}
 	check_cmd_is_empty_or_space(info, argv[3]);
 	info->cmd2_splited = ft_split(argv[3], ' ');
 	if (info->cmd2_splited == NULL)
-		message_error(info, "Error\n");
+		message_error(info, "Unxpected Error\n");
 	info->cmd2_path = get_path_cmd(info, info->cmd2_splited[0], environ);
 	if (dup2(info->fds[0], 0) < 0 || dup2(info->fd_out, 1) < 0)
 	{
 		close(info->fds[0]);
 		close(info->fd_out);
 		ft_printf("%s\n", strerror(errno));
-		free_all(info);
-		exit(1);
+		free_all_exit(info, 1);
 	}
 	close(info->fds[0]);
 	close(info->fd_out);
@@ -166,8 +160,9 @@ int	main(int argc, char *argv[], char **environ)
 //	nm -u ./pipex // ok
 // mistake of spelling // ok
 // 	diretory -> directory (no_envp func) // ok
-// leaks
-// valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./your_program_file [args]
-// makefile "CC = cc -g" -> "CC = cc"
+// leaks // ok
+// valgrind --leak-check=full --show-leak-kinds=all 
+//	--trace-children=yes ./your_program_file [args]
+// makefile "CC = cc -g" -> "CC = cc" // ok
 
 // confirm the operation when cmd is "sleep"

@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:25:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 15:42:51 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:28:40 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ char	*search_excutable_file(t_pipex *info, char *file)
 				return (file);
 			}
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
-			free_all(info);
-			exit(126);
+			free_all_exit(info, 126);
 		}
 		else
 		{
 			ft_printf("bash: %s: %s\n", file, strerror(errno));
-			free_all(info);
-			exit(127);
+			free_all_exit(info, 127);
 		}
 	}
 	return (NULL);
@@ -79,8 +77,7 @@ char	*search_cmd(t_pipex *info, char *cmd_without_op)
 			ft_printf("bash: %s: %s\n", path_cmd, strerror(errno));
 			free(cmd_without_op);
 			free(path_cmd);
-			free_all(info);
-			exit(126);
+			free_all_exit(info, 126);
 		}
 		free(path_cmd);
 		i++;
@@ -97,14 +94,13 @@ char	*get_path_cmd(t_pipex *info, char *cmd, char **environ)
 		return (cmd);
 	cmd_without_op = ft_strndup(cmd);
 	if (cmd_without_op == NULL)
-		message_error(info, "Error\n");
+		message_error(info, "Unxpected Error\n");
 	path_cmd = search_cmd(info, cmd_without_op);
 	if (path_cmd == NULL)
 	{
 		ft_printf("%s: command not found\n", cmd_without_op);
 		free(cmd_without_op);
-		free_all(info);
-		exit(127);
+		free_all_exit(info, 127);
 	}
 	free(cmd_without_op);
 	return (path_cmd);

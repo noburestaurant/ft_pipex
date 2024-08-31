@@ -1,5 +1,5 @@
 NAME = pipex
-CC = cc -g
+CC = cc
 GFLAGS = -Wall -Wextra -Werror
 # VFLAGS				=	 \
 # 						--track-origins=yes \

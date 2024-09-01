@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:32:57 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/31 15:33:57 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:20:02 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,6 @@ int	main(int argc, char *argv[], char **environ)
 // valgrind --leak-check=full --show-leak-kinds=all 
 //	--trace-children=yes ./your_program_file [args]
 // makefile "CC = cc -g" -> "CC = cc" // ok
+// excute binary file user creates when evnp is not found
 
 // confirm the operation when cmd is "sleep"

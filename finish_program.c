@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:12:41 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/31 15:29:03 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/09/01 12:42:16 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,19 @@ void	return_status(t_pipex *info)
 
 void	free_all_exit(t_pipex *info, int return_status)
 {
-	if (info == NULL)
-		return ;
-	if (info->cmd1_path != NULL)
-		free(info->cmd1_path);
-	if (info->cmd2_path != NULL)
-		free(info->cmd2_path);
-	if (info->cmd1_splited != NULL)
-		free_splited_arrays(info->cmd1_splited);
-	if (info->cmd2_splited != NULL)
-		free_splited_arrays(info->cmd2_splited);
-	if (info->splited_path_envp != NULL)
-		free_splited_arrays(info->splited_path_envp);
+	if (info != NULL)
+	{
+		if (info->cmd1_path != NULL)
+			free(info->cmd1_path);
+		if (info->cmd2_path != NULL)
+			free(info->cmd2_path);
+		if (info->cmd1_splited != NULL)
+			free_splited_arrays(info->cmd1_splited);
+		if (info->cmd2_splited != NULL)
+			free_splited_arrays(info->cmd2_splited);
+		if (info->splited_path_envp != NULL)
+			free_splited_arrays(info->splited_path_envp);
+	}
 	exit(return_status);
 }
 

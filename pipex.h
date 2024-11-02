@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakayam <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:33:27 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/31 15:33:28 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/11/02 22:55:28 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*get_envp_path(char **environ);
 char	*join_path(t_pipex *info, char *env, char *cmd);
 void	error_no_envp(t_pipex *info, char *cmd_without_op);
 void	check_cmd_is_empty_or_space(t_pipex *info, char *cmd);
+char	*search_excutable_file(t_pipex *info, char *file);
 char	*search_excutable_file(t_pipex *info, char *file);
 char	*get_path_cmd(t_pipex *info, char *cmd, char **environ);
 void	error(t_pipex *info, char *str);

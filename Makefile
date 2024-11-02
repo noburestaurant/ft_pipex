@@ -9,7 +9,7 @@ SRCS = pipex.c get_path.c finish_program.c utils.c \
 		ft_printf_stderr/format_put_num.c ft_printf_stderr/format_put_letter.c \
 		 ft_printf_stderr/ft_printf_utils.c ft_printf_stderr/ft_printf.c \
 		./libft/ft_strnstr.c ./libft/ft_split.c ./libft/ft_strlen.c \
-		./libft/ft_strjoin.c ./libft/ft_strchr.c
+		./libft/ft_strjoin.c ./libft/ft_strchr.c ./libft/ft_strdup.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

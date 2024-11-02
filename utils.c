@@ -6,7 +6,7 @@
 /*   By: hnakayam <hnakayam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:29:47 by hnakayam          #+#    #+#             */
-/*   Updated: 2024/08/26 15:30:25 by hnakayam         ###   ########.fr       */
+/*   Updated: 2024/11/02 22:54:59 by hnakayam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ void	init_info(t_pipex *info)
 	info->cmd1_splited = NULL;
 	info->cmd2_splited = NULL;
 	info->splited_path_envp = NULL;
+}
+
+void	error_no_envp(t_pipex *info, char *cmd_without_op)
+{
+	ft_printf("bash: %s: No such file or directory\n", cmd_without_op);
+	free(cmd_without_op);
+	exit(127);
 }
